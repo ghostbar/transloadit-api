@@ -1,0 +1,29 @@
+{
+  "name": "transloadit-api",
+  "version": "0.0.1",
+  "description": "Transloadit API",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "transloadit",
+    "api"
+  ],
+  "author": "Jose Luis Rivas <me@ghostbar.co>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghostbar/transloadit-api"
+  },
+  "dependencies": {
+    "request": "~2.33.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "should": "~3.1.0"
+  },
+  "engines": {
+    "node": ">=0.10.25"
+  }
+}
