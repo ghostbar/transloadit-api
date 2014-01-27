@@ -7,12 +7,15 @@
 'use strict';
 
 var Signature = require('./lib/signature'),
+  Assemblies = require('./lib/assemblies'),
   uri = {
-    base: 'https://api2.transloadit.com',
+    base: 'http://api2.transloadit.com',
+    assemblies: '/assemblies'
   };
 
 module.exports = function (opts) {
   return {
-    signature: new Signature(opts)
+    signature: new Signature(opts),
+    assembly: new Assemblies(opts, uri)
   };
 };
