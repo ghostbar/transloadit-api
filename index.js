@@ -24,3 +24,6 @@ module.exports.signature = module.exports.Signature = function (opts) {
   return new Signature(opts);
 };
 
+module.exports.assembly = module.exports.Assembly = function (opts) {
+  return new Assemblies(opts, uri);
+};
