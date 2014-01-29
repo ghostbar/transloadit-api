@@ -3,7 +3,8 @@
 'use strict';
 
 var TransloaditLib = require('../index'),
-    config = require('./config.json'),
+    optional = require('optional'),
+    config = optional('./config.json') || {'key': 'random', 'secret': 'random'},
     should = require('should');
 
 describe('TransloadIt.Assembly Module:', function () {
