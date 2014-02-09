@@ -2,10 +2,10 @@
 /* global it */
 'use strict';
 
-var TransloaditLib = require('../index'),
-    optional = require('optional'),
-    config = optional('./config.json') || {'key': 'random', 'secret': 'random'},
-    should = require('should');
+var TransloaditLib = require('../index');
+var optional = require('optional');
+var config = optional('./config.json') || {'key': 'random', 'secret': 'random'};
+var should = require('should');
 
 describe('TransloadIt.Assembly Module:', function () {
   describe('Assembly loading from the global export', function () {

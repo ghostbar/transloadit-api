@@ -2,10 +2,10 @@
 /* global it */
 'use strict';
 
-var TransloaditLib = require('../index'),
-    optional = require('optional'),
-    config = optional('./config.json') || {key: 'random', secret: 'random'},
-    should = require('should');
+var TransloaditLib = require('../index');
+var optional = require('optional');
+var config = optional('./config.json') || {key: 'random', secret: 'random'};
+var should = require('should');
 
 describe('TransloadIt.Signature Module:', function () {
   describe('Signature loading from the global export', function () {
@@ -48,10 +48,10 @@ describe('TransloadIt.Signature Module:', function () {
 
   describe('Creation of signature', function () {
     var sig = new TransloaditLib.Signature(config),
-      params = {
-        'template_id': 'Random'
-      },
-      x = sig.create(params);
+    var params = {
+      'template_id': 'Random'
+    };
+    var x = sig.create(params);
 
     it('should create a new signature', function () {
       x.should.be.an.instanceOf(Object);
