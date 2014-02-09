@@ -47,7 +47,7 @@ describe('TransloadIt.Signature Module:', function () {
   });
 
   describe('Creation of signature', function () {
-    var sig = new TransloaditLib.Signature(config),
+    var sig = new TransloaditLib.Signature(config);
     var params = {
       'template_id': 'Random'
     };
