@@ -17,12 +17,14 @@
     "url": "https://github.com/ghostbar/transloadit-api"
   },
   "dependencies": {
-    "request": "~2.33.0"
+    "request": "~2.33.0",
+    "lodash": "~2.4.1",
+    "form-data": "~0.1.2"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
     "should": "~3.1.0",
-    "optional": "0.1.0-2"
+    "optional": "~0.1.0-2"
   },
   "engines": {
     "node": ">=0.10.25"
