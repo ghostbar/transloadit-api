@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "request": "~2.33.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "moment": "~2.5.1"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
