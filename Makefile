@@ -2,12 +2,23 @@
 MOCHA_OPTS= --check-leaks
 REPORTER = spec
 
-test:
+test: test-nonet
+
+test-all: test-nonet test-net
+
+test-nonet:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		--globals setImmediate,clearImmediate \
 		$(MOCHA_OPTS) \
 		test/test-*.js
+
+test-net:
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		---reporter $(REPORTER) \
+		--globals setImmediate,clearImmediate \
+		$(MOCHA_OPTS) \
+		test/net-test-*.js
 
 clean: clean-docs
 
