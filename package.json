@@ -18,8 +18,7 @@
   },
   "dependencies": {
     "request": "~2.33.0",
-    "lodash": "~2.4.1",
-    "form-data": "~0.1.2"
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
