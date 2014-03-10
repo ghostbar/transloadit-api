@@ -22,3 +22,5 @@ Author
 License
 -------
 The files are licensed under the MIT terms.
+
+The image on `test/test-image.jpg` is released under the license [Creative Commons Attribution 4.0](http://creativecommons.org/licenses/by/4.0/)
