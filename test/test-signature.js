@@ -78,4 +78,31 @@ describe('TransloadIt.Signature Module:', function () {
     });
 
   });
+
+  describe('Test create signature logic is correct', function () {
+    var sig = new TransloaditLib.Signature({
+      key: '2b0c45611f6440dfb64611e872ec3211',
+      secret: 'd805593620e689465d7da6b8caf2ac7384fdb7e9'
+    });
+
+    var params = {
+      auth: {
+        expires: '2010/10/19 09:01:20+00:00',
+        key: '2b0c45611f6440dfb64611e872ec3211'
+      },
+      steps: {
+        encode: {
+          robot: '/video/encode'
+        }
+      }
+    };
+
+    var answer = '00320965b86d42b6d983d1fad3f126ee7385b962';
+
+    var response = sig.createSignature(params);
+
+    it('should equal the example given in answer', function () {
+      response.should.equal(answer);
+    });
+  });
 });
