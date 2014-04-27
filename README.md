@@ -13,9 +13,8 @@ Quick-usage
       'secret': '...'
     };
     var signature = require('transloadit-api').Signature(config);
-    var x;
 
-    params = {
+    var params = {
       steps: {
         encode: {
           robot: "/video/encode"
@@ -23,7 +22,7 @@ Quick-usage
       }
     };
 
-    x = signer.create(params);
+    var x = signature.create(params);
 
     /* now x has a signature for the given parameters */
     /* doing `console.log(x) would give */

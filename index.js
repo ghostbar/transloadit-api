@@ -2,7 +2,7 @@
 // transloadit-api
 // ===============
 //
-// A (work-in-progress) Transloadit API.
+// A Transloadit API.
 //
 'use strict';
 
