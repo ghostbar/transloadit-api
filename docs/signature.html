@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Module: Signature</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="module-signature">Module: Signature</h1>
+
+          
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="assemblies.html">
+                    assemblies.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="notifications.html">
+                    notifications.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="signature.html">
+                    signature.js
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div>
+        
+      
+        
+        <p><a name='constructor'></a></p>
+<h2 id="constructor">Constructor</h2>
+
+        
+      
+        
+        
+        
+          <div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Signature</span> <span class="hljs-params">(opts)</span> {</span>
+
+  <span class="hljs-comment">/* checking the required arguments */</span>
+  [<span class="hljs-string">'key'</span>, <span class="hljs-string">'secret'</span>].forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> {</span>
+    <span class="hljs-keyword">if</span> (opts[item] == <span class="hljs-literal">null</span>)
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'There\'s a required argument missing: '</span> + item);
+  });
+
+  <span class="hljs-keyword">this</span>.opts = opts;
+}</pre></div>
+        
+      
+        
+        <p><a name='create'></a></p>
+<h2 id="create-a-signature-ready-for-consume">Create a signature ready for consume</h2>
+
+        
+      
+        
+        <h4 id="arguments">Arguments</h4>
+<ul>
+<li><code>params</code> — params to be sent to transloadit</li>
+<li><code>opts</code> — Array of opts to be handled by the generator<ul>
+<li><code>expires</code> — (Optional) Time in miliseconds for expiration (Default
+is 15 minutes or 900000 ms)</li>
+</ul>
+</li>
+<li><code>Callback</code> function — (Optional)</li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p>A signature, ready to be used with the payload sent to the function.</p>
+<h4 id="example">Example</h4>
+<pre><code><span class="hljs-keyword">var</span> params = {
+  <span class="hljs-string">'steps'</span>: { ... }
+},
+opts = {
+  <span class="hljs-string">'expires'</span>: <span class="hljs-string">'60000'</span>
+};
+
+sig(params, opts);
+</code></pre><h4 id="code">Code</h4>
+
+        
+          <div class='highlight'><pre>Signature.prototype.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(params, opts, callback)</span> {</span>
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+  <span class="hljs-keyword">var</span> expires;
+
+  <span class="hljs-keyword">if</span> (opts != <span class="hljs-literal">null</span>)
+    expires = opts.expires || <span class="hljs-number">15</span> * <span class="hljs-number">60000</span>;
+  <span class="hljs-keyword">else</span>
+    expires = <span class="hljs-number">15</span> * <span class="hljs-number">60000</span>;
+
+  params[<span class="hljs-string">'auth'</span>] = {
+    <span class="hljs-string">'key'</span>: self.opts.key,
+    expires: (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>( (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()).getTime() + expires) ).toISOString()
+  };
+
+  <span class="hljs-keyword">var</span> sig = {
+    signature: self.createSignature(params),
+    params: params
+  };
+
+  <span class="hljs-keyword">if</span> (callback != <span class="hljs-literal">null</span>)
+    <span class="hljs-keyword">return</span> callback(<span class="hljs-literal">null</span>, sig);
+
+  <span class="hljs-keyword">return</span> sig;
+};
+
+Signature.prototype.createSignature = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(params)</span> {</span>
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+  <span class="hljs-keyword">var</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+  <span class="hljs-keyword">var</span> paramString = <span class="hljs-built_in">JSON</span>.stringify(params);
+
+  <span class="hljs-keyword">var</span> theSignature = crypto
+    .createHmac(<span class="hljs-string">'sha1'</span>, self.opts.secret)
+    .update(
+      <span class="hljs-keyword">new</span> Buffer(
+        paramString,
+        <span class="hljs-string">'utf-8'</span>
+      )
+    )
+    .digest(<span class="hljs-string">'hex'</span>);
+
+  <span class="hljs-keyword">return</span> theSignature;
+};
+
+module.exports = Signature;</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
