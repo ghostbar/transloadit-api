@@ -22,7 +22,7 @@ module.exports = function (opts) {
     signature: new Signature(opts),
     assembly: new Assemblies(opts, uri),
     notification: new Notifications(opts, uri),
-    template: new Templates(opts, uri);
+    template: new Templates(opts, uri)
   };
 };
 
