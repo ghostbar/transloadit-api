@@ -45,4 +45,24 @@ describe('TransloadIt.Template Module:', function () {
       should.exist(a.create);
     });
   });
+
+  describe('Template.create method', function () {
+    var a = require('../index').Template(config);
+
+    it('should return an error on missing params', function (done) {
+      a.create(null, function (err) {
+        should.exist(err);
+
+        done();
+      });
+    });
+
+    it('should return an error on missing template param', function (done) {
+      a.create({}, function (err) {
+        should.exist(err);
+
+        done();
+      });
+    });
+  });
 });
