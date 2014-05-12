@@ -77,4 +77,29 @@ describe('TransloadIt.Template Module:', function () {
       });
     });
   });
+  
+  describe('Template.proto.edit method', function () {
+    var a = require('../index').Template(config);
+
+    it('should return an error on missing params', function (done) {
+      a.edit(null, null, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+
+    it('should return an error on missing name/template from params', function (done) {
+      a.edit({}, null, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+
+    it('should return an error on missing templateId', function (done) {
+      a.edit({name: 'asd', template: 'asd'}, null, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+  });
 });
