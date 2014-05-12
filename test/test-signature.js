@@ -105,4 +105,31 @@ describe('TransloadIt.Signature Module:', function () {
       response.should.equal(answer);
     });
   });
+
+  describe('Check the signature with the check method', function () {
+    var sig = new TransloaditLib.Signature({
+      key: '2b0c45611f6440dfb64611e872ec3211',
+      secret: 'd805593620e689465d7da6b8caf2ac7384fdb7e9'
+    });
+
+    var params = {
+      auth: {
+        expires: '2010/10/19 09:01:20+00:00',
+        key: '2b0c45611f6440dfb64611e872ec3211'
+      },
+      steps: {
+        encode: {
+          robot: '/video/encode'
+        }
+      }
+    };
+
+    var signature = sig.createSignature(params);
+    var response = sig.check(params, signature.signature);
+
+    it('should return true', function () {
+      response.should.equal(true);
+    });
+
+  });
 });
