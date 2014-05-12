@@ -65,4 +65,16 @@ describe('TransloadIt.Template Module:', function () {
       });
     });
   });
+
+  describe('Template.proto.retrieve method', function () {
+    var a = require('../index').Template(config);
+
+    it('should return an error on missing templateId', function (done) {
+      a.retrieve(null, function (err) {
+        should.exist(err);
+
+        done();
+      });
+    });
+  });
 });
