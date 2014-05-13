@@ -102,4 +102,28 @@ describe('TransloadIt.Template Module:', function () {
       });
     });
   });
+
+  describe('Template.proto.remove method', function () {
+    var a = require('../index').Template(config);
+
+    it('should return an error on missing templateid', function (done) {
+      a.remove(null, function (err) {
+        should.exist(err);
+
+        done();
+      });
+    });
+  });
+
+  describe('Template.proto.retrieveList method', function () {
+    var a = require('../index').Template(config);
+
+    it('should return an error on missing params', function (done) {
+      a.retrieveList(null, function (err) {
+        should.exist(err);
+
+        done();
+      });
+    });
+  });
 });
