@@ -52,6 +52,13 @@
                   </a>
                 </li>
               
+                
+                <li>
+                  <a class="source" href="templates.html">
+                    templates.js
+                  </a>
+                </li>
+              
             </ol>
           </div>
         
@@ -125,6 +132,9 @@ sig(params, opts);
   <span class="hljs-keyword">else</span>
     expires = <span class="hljs-number">15</span> * <span class="hljs-number">60000</span>;
 
+  <span class="hljs-keyword">if</span> (params == <span class="hljs-literal">null</span>)
+    params = {};
+
   params[<span class="hljs-string">'auth'</span>] = {
     <span class="hljs-string">'key'</span>: self.opts.key,
     expires: (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>( (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()).getTime() + expires) ).toISOString()
@@ -157,6 +167,16 @@ Signature.prototype.createSignature = <span class="hljs-function"><span class="h
     .digest(<span class="hljs-string">'hex'</span>);
 
   <span class="hljs-keyword">return</span> theSignature;
+};
+
+Signature.prototype.check = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(params, sig)</span> {</span>
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+  <span class="hljs-keyword">var</span> theSignature = self.createSignature(params);
+
+  <span class="hljs-keyword">if</span> (theSignature.signature === sig)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
 };
 
 module.exports = Signature;</pre></div>
