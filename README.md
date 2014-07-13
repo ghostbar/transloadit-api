@@ -3,6 +3,24 @@ transloadit-api [![Build Status](https://secure.travis-ci.org/ghostbar/transload
 
 A Node.js library for Transloadit's API.
 
+Assemblies Interface
+--------------------
+
+### Brief
+
+    var tlib = require('transloadit-api');
+    var assembly = new tlib.assembly(credentials);
+
+    assembly.post(files, params, callback);
+
+### assembly.post
+
+The `post` method is used to upload files and it can take a single fileBlob or an array of them, then a JSON with the params accepted by Transloadit and finally a callback as the third argument.
+
+    assembly.post(fileBlob, paramsAcceptedByTransloadit, function (err, response) {
+      // Do whatever you want
+    });
+
 Quick-usage
 -----------
 
