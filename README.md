@@ -3,6 +3,8 @@ transloadit-api [![Build Status](https://secure.travis-ci.org/ghostbar/transload
 
 A Node.js library for Transloadit's API.
 
+It has an interface for each of the available actions for Transloadit's API: assemblies, notifications and templates.
+
 Assemblies Interface
 --------------------
 
