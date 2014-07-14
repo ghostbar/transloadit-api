@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Module: assemblies</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="module-assemblies">Module: assemblies</h1>
+
+          
+        
+
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div>
+        
+      
+        
+        <p><a name='constructor'></a></p>
+<h2 id="constructor">Constructor</h2>
+
+        
+      
+        
+        <h4 id="code">Code</h4>
+
+        
+          <div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Assemblies</span> <span class="hljs-params">(opts, uri)</span> </span>{
+  <span class="hljs-comment">/* checking the required arguments */</span>
+  [<span class="hljs-string">'key'</span>, <span class="hljs-string">'secret'</span>].forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> </span>{
+    <span class="hljs-keyword">if</span> (opts[item] == <span class="hljs-literal">null</span>)
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'There\'s a required argument missing: '</span> + item);
+  });
+
+  <span class="hljs-keyword">this</span>.opts = opts;
+  <span class="hljs-keyword">this</span>.uri = uri;
+
+}</pre></div>
+        
+      
+        
+        <p><a name='post'></a></p>
+<h2 id="public-send-an-assembly-to-transloadit-api">Public: send an assembly to Transloadit API</h2>
+
+        
+      
+        
+        <h4 id="parameters">Parameters</h4>
+<ul>
+<li><code>files</code> - <code>File Object</code> JSON (it may have several files)</li>
+<li><code>params</code></li>
+<li><code>callback</code> - <code>Callback Function</code></li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p>A <code>Callback</code> function with <code>(err, body)</code> from the request.</p>
+<h4 id="code">Code</h4>
+
+        
+          <div class='highlight'><pre>Assemblies.prototype.post = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(files, params, callback)</span> </span>{
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+  <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+  <span class="hljs-keyword">var</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>);
+  <span class="hljs-keyword">var</span> r = request.post(self.uri.base + self.uri.assemblies, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, response, body)</span> </span>{
+    <span class="hljs-comment">/* Here's the callback, we clean up the `response` and only return `body` */</span>
+    <span class="hljs-keyword">if</span> (err)
+      <span class="hljs-keyword">return</span> callback(err);
+
+    <span class="hljs-keyword">return</span> callback(<span class="hljs-literal">null</span>, body);
+  });
+
+  <span class="hljs-keyword">var</span> SignatureLib = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./signature'</span>);
+  <span class="hljs-keyword">var</span> signature = <span class="hljs-keyword">new</span> SignatureLib(self.opts);
+
+  <span class="hljs-keyword">var</span> form = r.form();
+
+  <span class="hljs-keyword">var</span> x = signature.create(params);
+
+  (<span class="hljs-built_in">Object</span>.keys(files)).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(file)</span> </span>{
+    form.append(files[file].name, fs.createReadStream(files[file].path), {
+      filename: files[file].name
+    });
+  });
+
+  form.append(<span class="hljs-string">'signature'</span>, x.signature);
+  form.append(<span class="hljs-string">'params'</span>, <span class="hljs-built_in">JSON</span>.stringify(x.params));
+};</pre></div>
+        
+      
+        
+        <p><a name='cancel'></a></p>
+<h2 id="public-cancel-an-assembly">Public: cancel an assembly</h2>
+
+        
+      
+        
+        <h4 id="parameters">Parameters</h4>
+<ul>
+<li><code>url</code> - The assembly’s URL returned when the assembly was created on the field <code>assembly_url</code></li>
+<li><code>signature</code> - (Optional) signature with which the assembly was created</li>
+<li><code>callback</code> - <code>Callback Function</code></li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p>A <code>Callback</code> function with <code>(err, body)</code> from the request.</p>
+<h4 id="code">Code</h4>
+
+        
+          <div class='highlight'><pre>Assemblies.prototype.cancel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url, signature, callback)</span> </span>{
+  <span class="hljs-keyword">if</span> (url == <span class="hljs-literal">null</span> || <span class="hljs-keyword">typeof</span>(url) !== <span class="hljs-string">'string'</span>)
+    <span class="hljs-keyword">return</span> callback(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'The URL (first) argument is required'</span>));
+
+  <span class="hljs-keyword">if</span> (signature != <span class="hljs-literal">null</span>)
+    url += <span class="hljs-string">'?signature='</span> + signature;
+
+  <span class="hljs-keyword">var</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>);
+  request({
+    uri: url,
+    method: <span class="hljs-string">'DELETE'</span>
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, res, body)</span> </span>{
+    <span class="hljs-keyword">return</span> callback(err, body);
+  });
+};
+
+<span class="hljs-built_in">module</span>.exports = Assemblies;</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

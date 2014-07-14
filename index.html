@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>transloadit-api</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          
+          <h1 id="transloadit-api">transloadit-api</h1>
+
+          
+        
+
+        
+      </div>
+
+      
+        
+        <p>A Transloadit API.</p>
+
+        
+          <div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> Signature = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/signature'</span>);
+<span class="hljs-keyword">var</span> Assemblies = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/assemblies'</span>);
+<span class="hljs-keyword">var</span> Notifications = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/notifications'</span>);
+<span class="hljs-keyword">var</span> Templates = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/templates'</span>);
+<span class="hljs-keyword">var</span> uri = {
+  base: <span class="hljs-string">'http://api2.transloadit.com'</span>,
+  assemblies: <span class="hljs-string">'/assemblies'</span>,
+  notifications: <span class="hljs-string">'/assembly_notifications'</span>,
+  templates: <span class="hljs-string">'/templates'</span>
+};
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(opts)</span> </span>{
+  <span class="hljs-keyword">return</span> {
+    signature: <span class="hljs-keyword">new</span> Signature(opts),
+    assembly: <span class="hljs-keyword">new</span> Assemblies(opts, uri),
+    notification: <span class="hljs-keyword">new</span> Notifications(opts, uri),
+    template: <span class="hljs-keyword">new</span> Templates(opts, uri)
+  };
+};
+
+<span class="hljs-built_in">module</span>.exports.signature = <span class="hljs-built_in">module</span>.exports.Signature = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(opts)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Signature(opts);
+};
+
+<span class="hljs-built_in">module</span>.exports.assembly = <span class="hljs-built_in">module</span>.exports.Assembly = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(opts)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Assemblies(opts, uri);
+};
+
+<span class="hljs-built_in">module</span>.exports.notification = <span class="hljs-built_in">module</span>.exports.Notification = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(opts)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Notifications(opts, uri);
+};
+
+<span class="hljs-built_in">module</span>.exports.template = <span class="hljs-built_in">module</span>.exports.Template = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(opts)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Templates(opts, uri);
+};</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
