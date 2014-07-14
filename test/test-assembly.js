@@ -46,4 +46,22 @@ describe('TransloadIt.Assembly Module:', function () {
     });
   });
 
+  describe('Assembly.cancel', function () {
+    var a = require('../index').Assembly(config);
+
+    it('should fail without URL', function (done) {
+      a.cancel(null, null, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+
+    it('should fail if URL is different than a string', function (done) {
+      a.cancel({}, null, function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+  });
+
 });
