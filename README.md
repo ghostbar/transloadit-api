@@ -1,4 +1,4 @@
-transloadit-api [![Build Status](https://secure.travis-ci.org/ghostbar/transloadit-api.png)](http://travis-ci.org/ghostbar/transloadit-api)
+transloadit-api [![Build Status](https://secure.travis-ci.org/ghostbar/transloadit-api.png)](http://travis-ci.org/ghostbar/transloadit-api) [![Code Climate](https://codeclimate.com/github/ghostbar/transloadit-api/badges/gpa.svg)](https://codeclimate.com/github/ghostbar/transloadit-api)
 ===============
 
 A Node.js library for Transloadit's API.
